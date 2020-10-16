@@ -1,5 +1,7 @@
 # campfireutilities
 Repository for CampFireUtilities.
+
+Developers:
 Boltzoid: Lead Project Manager
-Hackermon: Developer
-Seb.go: Developer
+Hackermon: Head Developer
+Seb.go: Head Developer

@@ -5,9 +5,7 @@ const Discord = require('discord.js')
 
 const client = new Discord.Client()
 
-var prefix = `$`
-
-client.commands = new Discord.Collection()
+client.defaultColor = `#FF0000`
 
 client.embed = {
 	main: (message)=>{
@@ -19,40 +17,14 @@ client.embed = {
 	}
 }
 
-client.on('ready', ()=>{
-	console.log(`Logged in as ${client.user.username}...`)
+fs.readdir('./events/', (err, files) => {
+  if (err) return console.error(err)
+  files.forEach(file => {
+    const event = require(`./events/${file}`)
 
-	client.user.setActivity(`LOADING`)
-
-	console.log(`Loading commands..`)
-
-	var commands = fs.readdirSync(`${__dirname}/commands`).filter(file => file.endsWith('.js'))	
-
-	commands.forEach((c)=>{
-		var c = require(`./commands/${c}`)
-
-		client.commands.set(c.name, c)
-
-		console.log(`Loaded command ${c.name}!`)
-	})
-
-	client.user.setActivity(`${client.users.cache.size} members!`, { type: 'WATCHING' })
-})
-
-client.on('message', (message)=>{
-	if(message.author.bot || message.channel.type == 'dm'){
-		return
-	}
-
-	var command = message.content.split(' ')[0].replace(prefix, '').toLowerCase()
-
-	var c = client.commands.get(command)
-
-	if(!c){
-		return
-	}
-
-	c.run(client, message)
+    let eventName = file.split(".")[0];
+    client.on(eventName, event.bind(null, client))
+  })
 })
 
 client.login(process.env.TOKEN)
