@@ -1,15 +1,28 @@
 {
   "name": "campfireutilities",
   "version": "1.0.0",
-  "description": "",
+  "description": "Repository for campfireutilities.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node bot.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "discord.js": "^12.3.1"
-  }
+    "discord.js": "^12.3.1",
+    "express": "^4.17.1",
+    "moment": "^2.29.1",
+    "ms": "^2.1.2"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Bolt-Code/campfireutilities.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Bolt-Code/campfireutilities/issues"
+  },
+  "homepage": "https://github.com/Bolt-Code/campfireutilities#readme"
 }
