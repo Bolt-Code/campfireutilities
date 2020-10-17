@@ -1,4 +1,5 @@
 const Discord = require('discord.js')
+const ms = require('ms')
 
 exports.run = async(client, message, args) => {
     var ms = 0
@@ -13,7 +14,9 @@ exports.run = async(client, message, args) => {
 
 			var e = new Discord.MessageEmbed()
 			e.setTitle(`🏓 Pong! 🏓`)
-			e.setDescription(`Bot Latency: ${ms}ms\nAPI Latency: ${client.ws.ping}ms`)
+      e.addField('Bot Latency', `${ms}ms`, true)
+      e.addField('API Latency', `${client.ws.ping}ms`, true)
+      //e.addField('Bot Uptime', `${ms(client.uptime, { long: true })}`, false)
 			e.setColor(client.defaultColor)
       m.edit(e)
   })
