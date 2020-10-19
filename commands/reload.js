@@ -6,7 +6,7 @@ exports.run = async(client, message, args) => {
 
     const reload = new Discord.MessageEmbed()
     .setColor('#FF1654')
-    .setDescription(`Successfully reloaded file: \`${args[0]}.js\``)
+    .setDescription(`Successfully reloaded file🧯: \`${args[0]}.js\``)
     .setFooter(`Requested by ${message.author.tag}`, message.author.displayAvatarURL({dynamic: true}))
     .setAuthor('Reload Successful', client.user.displayAvatarURL())
     .setTimestamp();

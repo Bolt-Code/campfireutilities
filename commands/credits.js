@@ -13,16 +13,16 @@ exports.run = (client, message, args)=>{
 	e.setFooter(`This people made the bot.`)
 
 	message.channel.send(e)*/
-
-
   const f = new Discord.MessageEmbed()
   f.setAuthor('Awesome people who made me', client.user.displayAvatarURL({dynamic: true}))
   
-   f.addFjield('Boltzoid', 'Supervisor, Founder and Head Developer', false) 
+  f.addField('Boltzoid', 'Supervisor, Founder and Head Developer', false) 
 
   f.addField(`Hackermon`, `Head Developer: Functionality, commands, and general development (also made the website)`, false) 
 
   f.addField('seb.go', 'Head Developer: Database integration, forms/sheets integration, and general development', false)
+  
+   f.addField('Piyeris', 'Co-Developer: Helping with minor commands.', false)
   
   f.setFooter(`Requested by ${message.author.tag}`, message.author.displayAvatarURL({dynamic: true}))
   f.setTimestamp()

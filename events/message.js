@@ -12,6 +12,20 @@ module.exports = async(client, message) => {
 		return
 	}
 
+  if(message.content.includes('<@&759762099278184479>')) {
+    message.channel.send('**WARNING:** You are about to ping the entire staff team. Only continue if no staff member is online or available to help. Abusing this will result in a mute or ban. To continue, type \`confirm\`.')
+
+    const filter = m => m.content.toLowerCase().includes('confirm') && m.author.id === message.author.id
+
+    message.channel.awaitMessages(filter, { max: 1, time: 20000 })
+    .then(collected => collected.first().channel.send(`**<@&767568808516780073> »** ${message.author} has requested to ping all staff. Please resolve the user's issue.\nIf this request was abusive, use \`${prefix}report [user ID/mention] [reason]\``))
+    .catch(collected => message.channel.send(`Request has been cancelled. (Requested by ${message.author})`));
+  }
+
+  if(message.content == 'potato'){
+    message.react('🥔')
+  }
+  
   if(!message.content.startsWith(prefix)) return;
 
   if(message.channel.type == 'dm') {

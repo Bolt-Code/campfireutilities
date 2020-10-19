@@ -9,7 +9,7 @@ const staffappSchema = mongoose.Schema({
   userId: reqString,
   userCode: reqString,
   sentConfMsg: {type: Boolean, required: true,},
-  appTimestamp: {type: String},
+  status: reqString,
 })
 
 module.exports = mongoose.model('staff-application', staffappSchema)
