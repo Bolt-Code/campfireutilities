@@ -1,8 +1,16 @@
 const Discord = require('discord.js')
-const devids = process.env.DEVIDS
+const mongo = require('../mongo')
+const staffpermsSchema = require('../schemas/staffperms-schema')
 
 exports.run = async(client, message, args) => {
-    if(!devids.includes(message.author.id)) return message.react('🔥');
+    const devperms = await staffpermsSchema.findOne({
+    permissionName: "dev"
+  })
+  .catch(e => false)
+
+  const {enabledIds} = evperms
+
+  if(!enabledIds.includes(message.author.id)) return message.react('🔥');
 
     const reload = new Discord.MessageEmbed()
     .setColor('#FF1654')

@@ -13,13 +13,13 @@ module.exports = async(client, message) => {
 	}
 
   if(message.content.includes('<@&759762099278184479>')) {
-    message.channel.send('**WARNING:** You are about to ping the entire staff team. Only continue if no staff member is online or available to help. Abusing this will result in a mute or ban. To continue, type \`confirm\`.')
+    message.channel.send('**WARNING:** You are about to ping the entire staff team. Only continue if no staff member is online or available to help. Abusing this will result in a mute or ban. To continue, type the answer to \`27 + 35\`.')
 
-    const filter = m => m.content.toLowerCase().includes('confirm') && m.author.id === message.author.id
+    const filter = m => m.content.includes('62') && m.author.id === message.author.id
 
     message.channel.awaitMessages(filter, { max: 1, time: 20000 })
     .then(collected => collected.first().channel.send(`**<@&767568808516780073> »** ${message.author} has requested to ping all staff. Please resolve the user's issue.\nIf this request was abusive, use \`${prefix}report [user ID/mention] [reason]\``))
-    .catch(collected => message.channel.send(`Request has been cancelled. (Requested by ${message.author})`));
+    .catch(collected => message.channel.send(`Request has been cancelled.`));
   }
 
   if(message.content == 'potato'){
@@ -112,6 +112,7 @@ module.exports = async(client, message) => {
       var file = require(`../commands/${cmd}.js`)
       file.run(client, message, args)
     } catch (e) {
+      console.log(e)
       return;
     }
   }

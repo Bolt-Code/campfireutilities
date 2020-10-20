@@ -5,7 +5,7 @@ const prefix = process.env.PREFIX
 exports.run = (client, message, args)=>{
 	var e = new Discord.MessageEmbed()
 
-	e.setTitle(`Commands - Campfire Utilites`)
+	e.setTitle(`❓Commands - Campfire Utilites❓`)
 
 	var commands = fs.readdirSync(`/home/runner/campfireutilities/commands`).filter(file => file.endsWith('.js'))
 

@@ -22,7 +22,7 @@ exports.run = async(client, message, args) => {
     var cannotwarn = new Discord.MessageEmbed()
     .setTitle('Error')
     .setColor('#FF1654')
-    .setDescription('You cannot warn this user because your highest role is either the same or lower as them')
+    .setDescription('You cannot warn this user because your highest role is either the same or lower as them.')
 
     message.channel.send(cannotwarn)
     return;
