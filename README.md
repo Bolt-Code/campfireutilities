@@ -1,11 +1,8 @@
 # campfireutilities
-Repository for CampFireUtilities.
+**Boltzoid (Supervisor)**: Founder and Head Developer 
 
-Developers:
-Boltzoid: Lead Project Manager/Head Developer 
+**Hackermon (Head Developer)**: Functionality, commands, and general development (also made the website) 
 
-Hackermon: Project Owner
+**seb.go (Head Developer)**: Database integration, forms/sheets integration, commands, and general development
 
-Seb.go: Head Developer
-
-Piyeris: Co-Developer
+**Piyeris (Co-Developer)**: Minor commands
