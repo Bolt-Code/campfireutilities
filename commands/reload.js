@@ -1,12 +1,20 @@
 const Discord = require('discord.js')
-const devids = process.env.DEVIDS
+const mongo = require('../mongo')
+const staffpermsSchema = require('../schemas/staffperms-schema')
 
 exports.run = async(client, message, args) => {
-    if(!devids.includes(message.author.id)) return message.react('🔥');
+    const devperms = await staffpermsSchema.findOne({
+    permissionName: "dev"
+  })
+  .catch(e => false)
+
+  const {enabledIds} = evperms
+
+  if(!enabledIds.includes(message.author.id)) return message.react('🔥');
 
     const reload = new Discord.MessageEmbed()
     .setColor('#FF1654')
-    .setDescription(`Successfully reloaded file: \`${args[0]}.js\``)
+    .setDescription(`Successfully reloaded file🧯: \`${args[0]}.js\``)
     .setFooter(`Requested by ${message.author.tag}`, message.author.displayAvatarURL({dynamic: true}))
     .setAuthor('Reload Successful', client.user.displayAvatarURL())
     .setTimestamp();
