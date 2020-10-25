@@ -1,4 +1,6 @@
 var Discord = require('discord.js')
+const mongo = require('../mongo')
+const punishmentsSchema = require('../schemas/punishments-schema')
 
 exports.run = async(client, message, args) => {
   if(!message.member.hasPermission('MANAGE_MESSAGES')) return message.reply('You do not meet the requirements to use this command, `manage messages`.');
@@ -43,21 +45,46 @@ exports.run = async(client, message, args) => {
 
     var embed = new Discord.MessageEmbed();
     embed.setColor('#FF1654')
-    embed.setTitle('You were warned in CampFire.')
+    embed.setTitle('You were warned in Campfire.')
     embed.addField('Reason', reason, true)
     embed.addField('Problem?', 'Please report any false or abusive punishments to our Camp Superintendent.',false)
     embed.setTimestamp();
 
+  var puncode = '';
+  var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  var charactersLength = characters.length;
+  for ( var i = 0; i < 15; i++ ) {
+    puncode += characters.charAt(Math.floor(Math.random() * charactersLength))
+  }
+
+  var date = new Date();
+  month = date.getMonth() + 1
+  date = month + '/' + date.getDate() + '/' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes();
+
+  await new punishmentsSchema({
+    userId: user.id,
+    authorId: message.author.id,
+    code: puncode,
+    type: 'Warn',
+    date: date,
+    reason: reason,
+  }).save()
+
+  const logchannel = message.guild.channels.cache.get('763386062873296936')
+  logchannel.send(`<:warn:769001734738804778> **${user.tag}** warned at \`${date}\` (${user.id})\nReason: ${reason}`)
+
+  var warnmsg = new Discord.MessageEmbed()
+  .setColor('#4BCC85') 
+  .setDescription(`<a:success:769189756051390471> ${user} has been **warned** with ID \`${puncode}\``)
+
+  message.channel.send(warnmsg);
+
     try {
-        user.send(embed);
+      if(user.bot) return;
+      user.send(embed);
     } catch(err) {
     }
 
-    var warnmsg = new Discord.MessageEmbed()
-    .setDescription(`<a:ok:767131603851804672> Successfully warned **${user.username}**`)
-    .setColor('#4BCC85');
-
-    message.channel.send(warnmsg);
 }
 
 

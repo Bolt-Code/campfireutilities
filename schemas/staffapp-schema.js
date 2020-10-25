@@ -10,6 +10,9 @@ const staffappSchema = mongoose.Schema({
   userCode: reqString,
   sentConfMsg: {type: Boolean, required: true,},
   status: reqString,
+  timezone: {type: String,},
+  age: {type: String,},
+  score: {type: String,},
 })
 
 module.exports = mongoose.model('staff-application', staffappSchema)

@@ -20,7 +20,11 @@ exports.run = async(client, message, args) => {
   let output;
 
   try {
-    output = await eval(code)
+    async function runcode() {
+      output = await eval(code) 
+    }
+
+    runcode()
   } catch(err) {
     const error = new Discord.MessageEmbed() 
       .setColor('#FF1654')

@@ -5,4 +5,4 @@
 
 **seb.go (Head Developer)**: Database integration, forms/sheets integration, commands, and general development
 
-**Piyeris (Co-Developer)**: Minor commands
+**Piyeris (Co-Developer)**: Commands

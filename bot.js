@@ -7,21 +7,45 @@ const {google} = require('googleapis');
 const staffappSchema = require('./schemas/staffapp-schema')
 const mongo = require('./mongo.js')
 const userSchema = require('./schemas/user-schema')
+const axios = require('axios')
 
-
+const { GiveawaysManager } = require("discord-giveaways")
 const client = new Discord.Client()
 
-client.defaultColor = `#FF0000`
 
-client.embed = {
-	main: (message)=>{
-		var e = new Discord.MessageEmbed()
-		e.setDescription(message)
-		e.setColor(`#2f3136`)
+// GIVEAWAYS SECTIONS :)
+const manager = new GiveawaysManager(client, {
+    storage: "./db/giveaways.json",
+    updateCountdownEvery: 10000,
+    default: {
+      botsCanWin: false,
+      exemptPermissions: [],
+      embedColor: "#FF1654",
+      reaction: "🎉"
+    }
+})
 
-		return e
-	}
-}
+client.defaultColor = `#FF1654`
+client.giveawaysManager = manager
+
+/*client.embed = {
+  error: (a)=>{
+    var e = new Discord.MessageEmbed()
+
+    e.setColor(client.defaultColor)
+    e.setDescription(a)
+
+    message.channel.send(e)
+  }
+}*/
+/*client.embed.error = (a)=>{
+  var e = new Discord.MessageEmbed()
+
+  e.setColor(client.defaultColor)
+  e.setDescription(a)
+
+  message.channel.send(e)
+}*/
 
 fs.readdir('./events/', (err, files) => {
   if (err) return console.error(err)
@@ -47,7 +71,7 @@ async function checkApps() {
 });
 }
 
-setInterval(checkApps, 5000)
+setInterval(checkApps, 10000)
 
 async function checkForms() {
   fs.readFile('credentials.json', (err, content) => {
@@ -56,7 +80,7 @@ async function checkForms() {
 });
 }
 
-setInterval(checkForms, 5000)
+setInterval(checkForms, 10000)
 
 function authorize(credentials, callback) {
   const {client_secret, client_id, redirect_uris} = credentials.installed;
@@ -94,13 +118,11 @@ function getNewToken(oAuth2Client, callback) {
   });
 }
 
-/*https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit*/
-
 async function checkStaffApps(auth) {
   const sheets = google.sheets({version: 'v4', auth});
   sheets.spreadsheets.values.get({
-    spreadsheetId: '1-4azjH4IHvVECrh1IXjeVKMo_hX50XqiURpvFMayHHM',
-    range: 'B2:C',
+    spreadsheetId: '1BSQ-rqDDtBUY74Pjxq_1pXvLoaliJnlg3EMnscRJT0s',
+    range: 'B2:G',
   }, (err, res) => {
     if (err) return console.log('The API returned an error: ' + err);
     const rows = res.data.values;
@@ -108,7 +130,7 @@ async function checkStaffApps(auth) {
     if (rows.length) {
       rows.map(async(row) => {
         const result = await staffappSchema.findOne({
-          userCode: row[0].replace(' ', '')
+          userCode: row[1].replace(' ', '')
         }).catch(e => false)
 
         if(result) {
@@ -118,9 +140,13 @@ async function checkStaffApps(auth) {
             messageUser.send(`Thanks for applying to be a staff member! We will reach out to you if we need more information or are thinking about accepting your application.`)
 
             await staffappSchema.updateOne({
-              userCode: row[0].replace(' ', ''),
+              userCode: row[1].replace(' ', ''),
             },{
               sentConfMsg: true,
+              status: 'Submitted',
+              timezone: row[4],
+              age: row[2],
+              score: row[0],
             })
           } else return;
         } else return;
@@ -211,3 +237,24 @@ async function checkRegForms(auth) {
     }
   });
 }
+
+async function covidUpdate() {
+  const url = 'https://api.covidtracking.com/v1/us/daily.json'
+
+  const {data} = await axios.get(url)
+
+  let stats1 = data[0].positive.toString()
+  let stats2 = stats1.split('')
+  let length1 = (stats2.length - 3)
+  let stats3 = stats2.splice(length1, 0, ',')
+  let length2 = (stats2.length - 7)
+  let stats4 = stats2.splice(length2, 0, ',')
+  let stats5 = stats2.join('')
+
+  const server = client.guilds.cache.get('759385366531932160')
+  const covidchannel = server.channels.cache.get('768581726682611762')
+
+  covidchannel.edit({ name: `${stats5} million` })
+}
+
+setInterval(covidUpdate, 900000)

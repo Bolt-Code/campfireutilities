@@ -3,6 +3,8 @@ const userSchema = require('../schemas/user-schema')
 const mongo = require('../mongo.js')
 
 module.exports = async(client, member) => {
+  if(!member.guild.id === '759385366531932160') return;
+
   async function regcode() {
   var result = '';
   var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -25,4 +27,14 @@ module.exports = async(client, member) => {
   }).save()
   }
   regcode()
+
+  var d = new Date()
+  var day = d.getDate()
+  var year = d.getFullYear()
+  var month = d.getMonth() + 1
+  var hour = d.getHours()
+  var minute = d.getMinutes()
+  var time = `${month}/${day}/${year} ${hour}:${minute}`
+  const logchannel = member.guild.channels.cache.get('766808200837726208')
+  logchannel.send(`<:join:768880799906660363> **${member.user.tag}** joined at \`${time}\` (${member.user.id})`)
 }

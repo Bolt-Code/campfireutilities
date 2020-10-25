@@ -18,11 +18,11 @@ exports.run = (client, message, args)=>{
   
   f.addField('Boltzoid', 'Supervisor, Founder and Head Developer', false) 
 
-  f.addField(`Hackermon`, `Head Developer: Functionality, commands, and general development (also made the website)`, false) 
+  f.addField(`Hackermon (RETIRED)`, `Head Developer: Functionality, commands, and general development (also made the website)`, false) 
 
   f.addField('seb.go', 'Head Developer: Database integration, forms/sheets integration, and general development', false)
   
-   f.addField('Piyeris', 'Co-Developer: Helping with minor commands.', false)
+   f.addField('Piyeris', 'Co-Developer: Helping with commands.', false)
   
   f.setFooter(`Requested by ${message.author.tag}`, message.author.displayAvatarURL({dynamic: true}))
   f.setTimestamp()
